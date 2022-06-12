@@ -1,0 +1,11 @@
+{
+  "authors": [
+    {
+        "name": "Rochmad Nurul Fahmi",
+        "email": "rochmadnf@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^7.4"
+  }
+}
