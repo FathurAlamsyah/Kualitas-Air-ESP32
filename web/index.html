@@ -38,10 +38,12 @@
       <h2 align="center" class="m-4">KUALITAS AIR</h2>
       <div class="row mt-4 border rounded-3">
         <p align="center" class="">
-          <button type="button" class="fs-1 fw-semibold btn btn-primary btn-lg m-2 rounded-pill">
-               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-search" viewBox="0 0 18 20">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                  </svg>CEK</i></button>
+          <button id="btn-check" type="button" class="fs-1 fw-semibold btn btn-primary btn-lg m-2 rounded-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-search" viewBox="0 0 18 20">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+            CEK
+          </button>
         </p>
         <table align=center class="" style="width:15%">
                   <td colspan="3" class="fw-semibold text-center">DATA</td>
@@ -49,18 +51,18 @@
              <tr>
                   <td class="fw-semibold">Tanggal</td>
                   <td>:</td>
-                  <td class="text-end">00/00/0000</td>
+                  <td class="text-end" id="date-display">00/00/0000</td>
              </tr>
              <tr>
                   <td class="fw-semibold">Waktu</td>
                   <td>:</td>
-                  <td class="text-end">00:00:00</td>
+                  <td class="text-end" id="time-display">00:00:00</td>
              </tr>
         </table>
-     <div class="row mb-2 ms-n1 justify-content-center text-white">
-          <div class="col-md-3 ms-3 mb-2 rounded-2 bagph">Col 1</div>
-          <div class="col-md-3 ms-3 mb-2 rounded-2 bagtur">Col 2</div>
-          <div class="col-md-3 ms-3 mb-2 rounded-2 bagtemp">Col 3</div>
+     <div class="row mb-2 ms-n1 justify-content-center text-white" id="data-display">
+          <div class="col-md-3 ms-3 mb-2 rounded-2 bagph">pH</div>
+          <div class="col-md-3 ms-3 mb-2 rounded-2 bagtur">Kekeruhan</div>
+          <div class="col-md-3 ms-3 mb-2 rounded-2 bagtemp">Suhu</div>
      </div>
      <div class="row ms-n1 justify-content-center text-white">
           <div class="col-md-3 border align-self-center rounded-2 ms-3 mb-3 bagfuzzy">Fuzzy</div>
@@ -76,5 +78,27 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.3/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.3/locale/id.js" integrity="sha256-A2FUZBqky6lKyKZbmK910voOwpFWZ0lH0RSPoUZoncM=" crossorigin="anonymous"></script>
+    <script>
+      const url = `${location.protocol}//${location.host}`;
+      const checkButton = document.getElementById('btn-check');
+
+      async function loadData(){
+        const request = await fetch(`${url}/app.php`).then(res => res.json());
+        const data = JSON.parse(request["m2m:cin"].con);
+        const display = document.getElementById('data-display');
+
+        // untuk display data ke halaman website
+        display.childNodes[1].textContent = `pH : ${data.ph}`;
+        display.childNodes[3].textContent = `${data.turbidity} NTU`;
+        display.childNodes[5].textContent = `${data.temperature} ℃`;
+
+        // display waktu
+        document.getElementById('date-display').textContent = moment.unix(data.current_time).format('DD/MM/YYYY');
+        document.getElementById('time-display').textContent = moment.unix(data.current_time).format('HH:mm:ss');
+      }
+      checkButton.addEventListener('click', loadData);
+    </script>
   </body>
 </html>
