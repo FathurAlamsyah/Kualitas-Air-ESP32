@@ -29,11 +29,11 @@
   int currTime;
 
 //Properties Antares
-  #define ACCESSKEY "aece2c4c6aae46bc:7fb2dfbb2027c712" //Access key akun Antares anda
-  #define WIFISSID "Fathur"                      //SSID WiFi
-  #define PASSWORD "fathur123"                        //Password WiFi
-  #define applicationName "KualitasAir"                 //Application name Antares
-  #define deviceName "TaFathur1"                        //Device Antares
+  #define ACCESSKEY "aece2c4c6aae46bc:7fb2dfbb2027c712"   //Access key akun Antares
+  #define WIFISSID "SSID WIFI"                            //SSID WiFi
+  #define PASSWORD "PASSWORD WIFI"                        //Password WiFi
+  #define applicationName "KualitasAir"                   //Application name Antares
+  #define deviceName "TaFathur1"                          //Device Antares
 
 AntaresESP32HTTP antares(ACCESSKEY); 
 
